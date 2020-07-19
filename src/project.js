@@ -6,7 +6,7 @@ import {
 import { closeModal, generateModal } from './utility.js';
 import { myProjectModalHTML } from './innerHtml.js';
 import { toLocalStorage } from './utility.js';
-import { flatten, indexOf, difference } from 'lodash';
+import { flatten, indexOf, difference, add } from 'lodash';
 let renderedProjects = [];
 let projectList = [];
 
@@ -36,6 +36,7 @@ export const generateProjectModal = () => {
 };
 
 const deleteProjectHandler = (id) => {
+	let addProjectBtn = document.getElementById('addProjectBtn');
 	let parentProject = document.getElementById(id);
 
 	parentProject.remove();
@@ -62,25 +63,24 @@ const renderProject = (array) => {
 		let projectItem = document.createElement('div');
 		projectItem.id = array.id;
 		projectItem.innerHTML = `
-        <h3>
+        <h3 class ='pname'>
         ${array.name}
         </h3>
-        <p>
+        <p class ='pdescription'>
         ${array.description}
         </p>
-        <button class = 'addTasks btn' data-id = ${array.id}>Add Tasks</button>
-        <div class="dropdown">
-            <button class="btn" style="border-left:1px solid navy">
-                <i class="fa fa-caret-down"></i>
-             </button>
-            <div class="dropdown-content">
-                <a>Delete Project</a>
-            </div>
-        </div>
+    	<button class = 'addTasks btn' data-id = ${array.id}>Add Tasks
+			<div class="dropdown">
+			<i class="fa fa-caret-down"></i>
+		<div class="dropdown-content">
+			<a>Delete Project</a>
+		</div>
+	</div></button>
         <ul> </ul>
        `;
 		let deleteProjectButton = projectItem.querySelector('a');
-		deleteProjectButton.addEventListener('click', () => {
+		deleteProjectButton.addEventListener('click', (e) => {
+			e.stopPropagation();
 			deleteProjectHandler(projectItem.id);
 		});
 
@@ -93,25 +93,24 @@ const renderProject = (array) => {
 			let projectItem = document.createElement('div');
 			projectItem.id = element.id;
 			projectItem.innerHTML = `
-            <h3>
+            <h3 class = 'pname'>
             ${element.name}
             </h3>
             <p>
             ${element.description}
             </p>
-            <button class = 'addTasks btn' data-id = ${element.id}>Add Tasks</button>
-            <div class="dropdown">
-                <button class="btn" style="border-left:1px solid navy">
-                    <i class="fa fa-caret-down"></i>
-                 </button>
-                <div class="dropdown-content">
-                    <a>Delete Project</a>
-                </div>
-            </div>
+			<button class = 'addTasks btn' data-id = ${element.id}>Add Tasks
+			<div class="dropdown">
+			<i class="fa fa-caret-down"></i>
+		<div class="dropdown-content">
+			<a>Delete Project</a>
+		</div>
+	</div></button>
             <ul> </ul>
            `;
 			let deleteProjectButton = projectItem.querySelector('a');
-			deleteProjectButton.addEventListener('click', () => {
+			deleteProjectButton.addEventListener('click', (e) => {
+				e.stopPropagation();
 				deleteProjectHandler(projectItem.id);
 			});
 

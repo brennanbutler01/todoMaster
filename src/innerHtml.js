@@ -7,11 +7,11 @@ export const myProjectModalHTML =
     <form class="form-example">
     <div class="form-example">
     <label for="project-name">Project Name: </label>
-    <input type="text" name="project-name" id="project-name" class='w3-input input' required autofocus>
+    <input type="text" name="project-name" id="project-name" class='input' required autofocus>
     </div>
     <div class="form-example">
     <label for="project-description">Enter Description: </label>
-    <input type="text" name="project-description" id="project-description" class= 'w3-input input' required>
+    <input type="text" name="project-description" id="project-description" class= 'input' required>
     </div>
     <div class="form-example">
     <input type = 'button' id = 'submitBtn' value = 'Add project'></input>

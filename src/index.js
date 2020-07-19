@@ -5,6 +5,7 @@ const hook = document.getElementById('hook');
 (() => {
 	const addProjectButton = document.createElement('button');
 	addProjectButton.id = 'addProjectBtn';
+	addProjectButton.classList.add('btn');
 	addProjectButton.textContent = 'Add Project';
 	hook.append(addProjectButton);
 

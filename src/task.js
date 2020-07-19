@@ -72,14 +72,8 @@ const renderTask = (array) => {
 			taskItem.innerHTML = `
         <button type="button" class="collapsible">${element.name} : ${element.duedate}</button>
         <div class="content">
-            <h6>
-            ${element.name}
-            </h6>
             <p>
             ${element.description}
-            </p>
-            <p>
-            ${element.duedate}
             </p>
             <p>
             ${element.priority}
