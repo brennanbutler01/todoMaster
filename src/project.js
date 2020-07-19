@@ -54,21 +54,22 @@ const renderProject = (array) => {
 		let projectItem = document.createElement('div');
 		projectItem.id = array.id;
 		projectItem.innerHTML = `
-        <h3 class ='pname'>
-        ${array.name}
-        </h3>
-        <p class ='pdescription'>
-        ${array.description}
-        </p>
-    	<button class = 'addTasks btn' data-id = ${array.id}>Add Tasks
-			<div class="dropdown">
-			<i class="fa fa-caret-down"></i>
-		<div class="dropdown-content">
-			<a>Delete Project</a>
-		</div>
-	</div></button>
-        <ul> </ul>
-       `;
+		<div class="row">
+			<div class="col s8 offset-s2">
+				<div class="card pink lighten-5">
+					<div class="card-content purple-text text-lighten-3">
+			  			<span class="card-title" id='card-title'>${element.name}</span>
+			 			<p>${element.description}</p>
+					</div>
+					<div class="card-action">
+			  			<a class='white-text btn-small purple lighten-3' href="#"><i class="material-icons left">delete_forever</i>Delete project</a>
+			  			<a class='white-text btn-small purple lighten-3' href="#">Add a task</a>
+					</div>
+		  		</div>
+			</div>
+	  	</div>	
+		<ul> </ul>
+	   `;
 		let deleteProjectButton = projectItem.querySelector('a');
 		deleteProjectButton.addEventListener('click', (e) => {
 			e.stopPropagation();
@@ -84,19 +85,20 @@ const renderProject = (array) => {
 			let projectItem = document.createElement('div');
 			projectItem.id = element.id;
 			projectItem.innerHTML = `
-            <h3 class = 'pname'>
-            ${element.name}
-            </h3>
-            <p>
-            ${element.description}
-            </p>
-			<button class = 'addTasks btn' data-id = ${element.id}>Add Tasks
-			<div class="dropdown">
-			<i class="fa fa-caret-down"></i>
-		<div class="dropdown-content">
-			<a>Delete Project</a>
-		</div>
-	</div></button>
+			<div class="row">
+			<div class="col s8 offset-s2">
+			  <div class="card pink lighten-5">
+				<div class="card-content purple-text text-lighten-3">
+				  <span class="card-title" id='card-title'>${element.name}</span>
+				  <p>${element.description}</p>
+				</div>
+				<div class="card-action">
+				  <a class='white-text btn-small purple lighten-3' href="#"><i class="material-icons left">delete_forever</i>Delete project</a>
+				  <a class='white-text btn-small purple lighten-3' href="#">Add a task</a>
+				</div>
+			  </div>
+			</div>
+		  </div>	
             <ul> </ul>
            `;
 			let deleteProjectButton = projectItem.querySelector('a');
