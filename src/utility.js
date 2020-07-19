@@ -1,17 +1,4 @@
 import {createDeleteTaskModal} from './task.js'
-export const closeModal = (modal) => {
-	const span = document.getElementsByClassName('close')[0];
-	span.addEventListener('click', () => {
-		modal.remove();
-	});
-
-
-	window.onclick = function (event) {
-		if (event.target == modal) {
-			modal.remove();
-		}
-	};
-};
 
 export const generateModal = (modalId, templateHTML) => {
 	const myModal = document.createElement('div');

@@ -26,19 +26,18 @@ export const generateProject = () => {
 
 };
 
-const deleteProjectHandler = (id) => {
-	let addProjectBtn = document.getElementById('addProjectBtn');
+const deleteRenderedProject = (id) => {
 	let parentProject = document.getElementById(id);
-
 	parentProject.remove();
-
 	removeLocalProject(id);
 };
 
 const removeLocalProject = (id) => {
 	let projectItems = JSON.parse(localStorage.getItem('projectList'));
-	let newItems = _.flatten(projectItems);
-
+	let newItems;
+	if (projectItems.length > 1) {
+		 newItems = _.flatten(projectItems);
+	}
 	newItems.forEach((element) => {
 		if (element.id == id) {
 			let indexOfProjectToRemove = newItems.indexOf(element);
@@ -58,8 +57,8 @@ const renderProject = (array) => {
 			<div class="col s8 offset-s2">
 				<div class="card pink lighten-5">
 					<div class="card-content purple-text text-lighten-3">
-			  			<span class="card-title" id='card-title'>${element.name}</span>
-			 			<p>${element.description}</p>
+			  			<span class="card-title" id='card-title'>${array.name}</span>
+			 			<p>${array.description}</p>
 					</div>
 					<div class="card-action">
 			  			<a class='white-text btn-small purple lighten-3' href="#"><i class="material-icons left">delete_forever</i>Delete project</a>
@@ -68,12 +67,10 @@ const renderProject = (array) => {
 		  		</div>
 			</div>
 	  	</div>	
-		<ul> </ul>
 	   `;
 		let deleteProjectButton = projectItem.querySelector('a');
 		deleteProjectButton.addEventListener('click', (e) => {
-			e.stopPropagation();
-			deleteProjectHandler(projectItem.id);
+			deleteRenderedProject(projectItem.id);
 		});
 
 		hook.append(projectItem);
@@ -99,12 +96,10 @@ const renderProject = (array) => {
 			  </div>
 			</div>
 		  </div>	
-            <ul> </ul>
            `;
 			let deleteProjectButton = projectItem.querySelector('a');
 			deleteProjectButton.addEventListener('click', (e) => {
-				e.stopPropagation();
-				deleteProjectHandler(projectItem.id);
+				deleteRenderedProject(projectItem.id);
 			});
 
 			hook.append(projectItem);

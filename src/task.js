@@ -1,6 +1,5 @@
 import {
 	generateModal,
-	closeModal,
 	collapisbleHandler,
 	deleteButtonModalHandler,
 } from './utility.js';
