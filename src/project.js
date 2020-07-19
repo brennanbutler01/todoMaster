@@ -14,7 +14,7 @@ const createProject = (name, description) => {
 };
 
 export const generateProject = () => {
-	const projectModal= document.getElementById('projectModal');
+	const projectModal = document.getElementById('projectModal');
 	const submitProjectBtn = document.getElementById('submitProjectBtn');
 	submitProjectBtn.addEventListener('click', () => {
 		const projectName = projectModal.querySelector('#project_name').value;
@@ -23,7 +23,6 @@ export const generateProject = () => {
 		).value;
 		createProject(projectName, projectDescription);
 	});
-
 };
 
 const deleteRenderedProject = (id) => {
@@ -36,47 +35,25 @@ const removeLocalProject = (id) => {
 	let projectItems = JSON.parse(localStorage.getItem('projectList'));
 	let newItems;
 	if (projectItems.length > 1) {
-		 newItems = _.flatten(projectItems);
+		newItems = _.flatten(projectItems);
+		newItems.forEach((element) => {
+			if (element.id == id) {
+				let indexOfProjectToRemove = newItems.indexOf(element);
+				newItems.splice(indexOfProjectToRemove, 1);
+				renderedProjects.splice(indexOfProjectToRemove, 1);
+				toLocalStorage('projectList', newItems);
+			}
+		});
+	} else {
+		renderedProjects.splice(0, 1);
+		toLocalStorage('projectList', renderedProjects);
 	}
-	newItems.forEach((element) => {
-		if (element.id == id) {
-			let indexOfProjectToRemove = newItems.indexOf(element);
-			newItems.splice(indexOfProjectToRemove, 1);
-			renderedProjects.splice(indexOfProjectToRemove, 1);
-			toLocalStorage('projectList', newItems);
-		}
-	});
 };
 
 const renderProject = (array) => {
 	if (array.constructor === Object) {
-		let projectItem = document.createElement('div');
-		projectItem.id = array.id;
-		projectItem.innerHTML = `
-		<div class="row">
-			<div class="col s8 offset-s2">
-				<div class="card pink lighten-5">
-					<div class="card-content purple-text text-lighten-3">
-			  			<span class="card-title" id='card-title'>${array.name}</span>
-			 			<p>${array.description}</p>
-					</div>
-					<div class="card-action">
-			  			<a class='white-text btn-small purple lighten-3' href="#"><i class="material-icons left">delete_forever</i>Delete project</a>
-			  			<a class='white-text btn-small purple lighten-3' href="#">Add a task</a>
-					</div>
-		  		</div>
-			</div>
-	  	</div>	
-	   `;
-		let deleteProjectButton = projectItem.querySelector('a');
-		deleteProjectButton.addEventListener('click', (e) => {
-			deleteRenderedProject(projectItem.id);
-		});
-
-		hook.append(projectItem);
 		renderedProjects.push(array);
-
-		toLocalStorage('projectList', renderedProjects);
+		renderProject(renderedProjects);
 	} else {
 		array.forEach((element) => {
 			let projectItem = document.createElement('div');
@@ -109,8 +86,8 @@ const renderProject = (array) => {
 
 			toLocalStorage('projectList', renderedProjects);
 		});
-
 	}
+	
 	let addTasksBtns = document.querySelectorAll('.addTasks');
 	addTasksHandler(addTasksBtns);
 };
