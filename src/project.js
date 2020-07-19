@@ -3,8 +3,6 @@ import {
 	tasksFromLocalStorage,
 	renderedTaskList,
 } from './task.js';
-import { closeModal, generateModal } from './utility.js';
-import { myProjectModalHTML } from './innerHtml.js';
 import { toLocalStorage } from './utility.js';
 import { flatten, indexOf, difference, add } from 'lodash';
 let renderedProjects = [];
@@ -15,24 +13,17 @@ const createProject = (name, description) => {
 	renderProject(projectList);
 };
 
-export const generateProjectModal = () => {
-	const projectModal = generateModal('projectModal', myProjectModalHTML);
-
-	const projectModalContent = document.querySelector('.projectModal');
-	console.log(projectModalContent);
-
-	projectModalContent.classList.add('projectModal');
-
-	const submitBtn = projectModal.querySelector('#submitBtn');
-	submitBtn.addEventListener('click', () => {
-		const projectName = projectModal.querySelector('#project-name').value;
+export const generateProject = () => {
+	const projectModal= document.getElementById('projectModal');
+	const submitProjectBtn = document.getElementById('submitProjectBtn');
+	submitProjectBtn.addEventListener('click', () => {
+		const projectName = projectModal.querySelector('#project_name').value;
 		const projectDescription = projectModal.querySelector(
-			'#project-description'
+			'#project_description'
 		).value;
 		createProject(projectName, projectDescription);
 	});
 
-	closeModal(projectModal);
 };
 
 const deleteProjectHandler = (id) => {

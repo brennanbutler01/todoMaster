@@ -1,19 +1,18 @@
-import { generateProjectModal, projectsFromLocaleStorage } from './project.js';
+import { generateProject, projectsFromLocaleStorage } from './project.js';
 
 const hook = document.getElementById('hook');
 
 (() => {
-	const addProjectButton = document.createElement('button');
-	addProjectButton.id = 'addProjectBtn';
-	addProjectButton.classList.add('btn');
-	addProjectButton.textContent = 'Add Project';
-	hook.append(addProjectButton);
-
 	if (localStorage.length > 0) {
 		projectsFromLocaleStorage();
 	}
 })();
 
-const addProjectButton = document.getElementById('addProjectBtn');
-addProjectButton.addEventListener('click', generateProjectModal);
+document.addEventListener('DOMContentLoaded', function () {
+  let elems = document.querySelectorAll('.modal');
+  let options = {
+    generateProject : generateProject(),
+  }
+  let instances = M.Modal.init(elems, options);
+});
 
