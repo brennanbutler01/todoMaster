@@ -20,8 +20,17 @@ const hook = document.getElementById('hook');
     let instances = M.Modal.init(elems);
     
   })
-  document.addEventListener('DOMContentLoaded', function() {
+  document.addEventListener('DOMContentLoaded', function () {
     let elems = document.querySelectorAll('.datepicker');
-    let instance = M.Datepicker.init(elems);
+    let options = {
+      onOpen: () => {
+        let datepickerBg = document.querySelector('.datepicker-date-display');
+        datepickerBg.id = 'datepickerBackground';
+        let datepickerUl = document.querySelectorAll('.dropdown-content');
+        console.log(datepickerUl);
+      }
+    }
+    let instance = M.Datepicker.init(elems,options);
   });
 })();
+

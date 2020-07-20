@@ -22,3 +22,40 @@ body {
   height:90%;
   width: 100%;
 }
+/* datepicker */
+.datepicker-date-display {
+  background-color: #ce93d8 !important;
+}
+
+.datepicker-day-button:focus {
+  color: white !important;
+  background-color: #ce93d8 !important;
+}
+
+
+.datepicker-done,
+.datepicker-cancel,
+.select-dropdown li>span
+.is-today
+ {
+  color:#ce93d8 !important
+}
+
+
+td.is-selected,
+.month-prev:active,
+.month-prev:focus,
+.month-next:active,
+.month-next:focus {
+  background-color: #ce93d8 !important
+}
+
+td.is-selected.is-today {
+  color: white !important
+}
+td.is-today{
+  color:#ce93d8!important;
+}
+.datepicker-table td.is-selected{
+  color:white !important;
+}
