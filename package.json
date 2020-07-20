@@ -14,6 +14,6 @@
   },
   "dependencies": {
     "lodash": "^4.17.19",
-    "materialize-css": "^1.0.0-rc.2"
+    "materialize-css": "^1.0.0"
   }
 }

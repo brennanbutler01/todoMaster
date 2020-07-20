@@ -27,7 +27,6 @@ const hook = document.getElementById('hook');
         let datepickerBg = document.querySelector('.datepicker-date-display');
         datepickerBg.id = 'datepickerBackground';
         let datepickerUl = document.querySelectorAll('.dropdown-content');
-        console.log(datepickerUl);
       }
     }
     let instance = M.Datepicker.init(elems,options);

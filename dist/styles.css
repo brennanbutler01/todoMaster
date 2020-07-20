@@ -8,6 +8,9 @@ body {
 #card-title {
     font-weight: bold;
 }
+#card-description {
+  font-weight: lighter;
+}
 /* label focus color */
 .input-field input:focus + label {
     color: #ce93d8  !important;
