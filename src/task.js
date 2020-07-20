@@ -5,6 +5,8 @@ import { flatten } from 'lodash';
 
 let taskList = [];
 export let renderedTaskList = [];
+let parentDivArray = [];
+
 
 export const addTasksHandler = (taskBtn) => {
 	let parentId =
@@ -13,14 +15,16 @@ export const addTasksHandler = (taskBtn) => {
 	if (!taskBtn.classList.contains('listening')) {
 		taskBtn.addEventListener('click', () => {
 			taskBtn.classList.add('listening');
-			generateTask(parentId);
+			generateTaskParent(parentId);
 		});
 	} else {
-		generateTask(parentId);
+		generateTaskParent(parentId);
 	}
 };
 
-const createTaskList = (name, description, duedate, notes, parent) => {
+const createTaskList = (name, description, duedate, notes) => {
+	let parent = parentDivArray[0];
+	parentDivArray.splice(0,1);
 	let newTask = {
 		name,
 		description,
@@ -34,48 +38,43 @@ const createTaskList = (name, description, duedate, notes, parent) => {
 	console.log(taskList);
 };
 
-export const generateTask = (parent) => {
+
+const taskSubmitHandler = () => {
 	const taskModal = document.getElementById('taskModal');
-	const submitBtn = document.getElementById('submitBtn');
+	let taskName = taskModal.querySelector('#task_name').value;
+	let taskDescription = taskModal.querySelector('#task_description').value;
+	let taskDuedate = taskModal.querySelector('#task_duedate').value;
+	let taskNotes = taskModal.querySelector('#task_notes').value;
+	createTaskList(
+		taskName,
+		taskDescription,
+		taskDuedate,
+		taskNotes,
+			// taskParentProject
+	);
+};
+const submitBtn = document.getElementById('submitBtn');
+submitBtn.addEventListener('click', taskSubmitHandler);
+
+export const generateTaskParent = (parent) => {
 	let parentProject = parent;
-
-	const taskSubmitHandler = () => {
-		let taskName = taskModal.querySelector('#task_name').value;
-		let taskDescription = taskModal.querySelector('#task_description').value;
-		let taskDuedate = taskModal.querySelector('#task_duedate').value;
-		let taskNotes = taskModal.querySelector('#task_notes').value;
-		let taskParentProject = parentProject;
-		createTaskList(
-			taskName,
-			taskDescription,
-			taskDuedate,
-			taskNotes,
-			taskParentProject
-		);
-	};
-	if (submitBtn.classList.contains('listening')) {
-		submitBtn.removeEventListener('click', taskSubmitHandler);
-		submitBtn.classList.remove('listening');
-	}
-	if (!submitBtn.classList.contains('listening')) {
-		submitBtn.addEventListener('click', taskSubmitHandler);
-		submitBtn.classList.add('listening');
-		console.log(submitBtn);
-	}
-
+	parentDivArray.push(parentProject);
 };
 
-const renderTask = (array) => {
-	if (array.constructor == Object) {
-		renderedTaskList.push(array);
-	} else {
-		array.forEach((element) => {
-			let parent = document.getElementById(`${element.parent.id}`);
-			let dropdownDiv = document.createElement('div');
-			dropdownDiv.classList.add('right-align');
-			dropdownDiv.innerHTML = `
-			<a class='dropdown-trigger btn-large waves-effect waves-light purple lighten-3' href='#' id= 'dropdown${element.id}' data-target='dropdown${element.id}'>See tasks!</a>
-			`;
+// const renderTask = (array) => {
+// 	console.log(array);
+// 	if (array.constructor == Object) {
+// 		renderedTaskList.push(array);
+// 		renderTask(array);
+// 	} else {
+// 		array.forEach((element) => {
+// 			let parent = document.getElementById(`${element.parent.id}`);
+// 			let dropdownDiv = document.createElement('div');
+// 			dropdownDiv.classList.add('right-align');
+// 			dropdownDiv.innerHTML = `
+// 			<a class='dropdown-trigger btn-large waves-effect waves-light purple lighten-3' href='#' id= 'dropdown${element.id}' data-target='dropdown${element.id}'>See tasks!</a>
+// 			`;
+// 			console.log(element);
 			// parent.firstElementChild.firstElementChild.firstElementChild.firstElementChild.
 			// 	lastElementChild.insertAdjacentElement(
 			// 	'afterend',
@@ -108,10 +107,10 @@ const renderTask = (array) => {
 			// parentDiv.insertAdjacentElement('beforeend', taskItem);
 			// let renderedTask = array.splice(0, 1);
 			// renderedTaskList.push(renderedTask);
-		});
-		// toLocalStorage('taskList', renderedTaskList);
-	}
-};
+// 		});
+// 		// toLocalStorage('taskList', renderedTaskList);
+// 	}
+// };
 
 let myModalIsVisible = false;
 
