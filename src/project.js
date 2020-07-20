@@ -1,10 +1,10 @@
 import {
 	addTasksHandler,
 	tasksFromLocalStorage,
-	renderedTaskList,
 } from './task.js';
 import { toLocalStorage } from './utility.js';
-import { flatten, indexOf, difference, add } from 'lodash';
+import { flatten, indexOf } from 'lodash';
+
 let renderedProjects = [];
 let projectList = [];
 
@@ -68,7 +68,7 @@ const renderProject = (array) => {
 				</div>
 				<div class="card-action">
 				  <a class='white-text btn-small purple lighten-3' href="#"><i class="material-icons left">delete_forever</i>Delete project</a>
-				  <a class='white-text btn-small purple lighten-3' href="#">Add a task</a>
+				  <a class='white-text waves-effect waves-light btn-small purple lighten-3 modal-trigger' id = 'taskModalTrigger${element.id}' href="#taskModal">Add a task</a>
 				</div>
 			  </div>
 			</div>
@@ -85,11 +85,11 @@ const renderProject = (array) => {
 			renderedProjects.push(renderedProject);
 
 			toLocalStorage('projectList', renderedProjects);
+			let addTasksBtns = document.getElementById(`taskModalTrigger${element.id}`);
+			addTasksHandler(addTasksBtns);
 		});
 	}
-	
-	let addTasksBtns = document.querySelectorAll('.addTasks');
-	addTasksHandler(addTasksBtns);
+
 };
 
 export const projectsFromLocaleStorage = () => {

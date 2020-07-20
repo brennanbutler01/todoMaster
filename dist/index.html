@@ -14,8 +14,14 @@
 			rel="stylesheet"
 			href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"
 		/>
-		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-		<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap" rel="stylesheet">
+		<link
+			href="https://fonts.googleapis.com/icon?family=Material+Icons"
+			rel="stylesheet"
+		/>
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300&display=swap"
+			rel="stylesheet"
+		/>
 		<script
 			src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"
 			defer
@@ -24,18 +30,18 @@
 	<body>
 		<div id="hook" class="container">
 			<div class="row">
-							<!-- Modal Trigger -->
+				<!-- Modal Trigger -->
 				<a
 					class="waves-effect purple lighten-3 waves-purple btn-large modal-trigger col s12"
 					id="projectModalTrigger"
 					href="#projectModal"
-					>Add a project	</a
-				>
+					>Add a project
+				</a>
 			</div>
-			<!-- Modal Structure -->
+			<!-- PROJECT MODAL Structure -->
 			<div id="projectModal" class="modal modal-fixed-footer">
 				<div class="modal-content valign-wrapper">
-					<h4 class='purple-text text-lighten-3'>Add Project</h4>
+					<h4 class="purple-text text-lighten-3">Add Project</h4>
 					<div class="row">
 						<form class="col s12">
 							<div class="row">
@@ -46,7 +52,9 @@
 										type="text"
 										name="project_name"
 									/>
-									<label class="purple-text text-lighten-3" for="project_name">Project Name</label>
+									<label class="purple-text text-lighten-3" for="project_name"
+										>Project Name</label
+									>
 								</div>
 							</div>
 							<div class="row">
@@ -57,7 +65,11 @@
 										type="text"
 										name="project_description"
 									/>
-									<label class='purple-text text-lighten-3' for="project_description">Description</label>
+									<label
+										class="purple-text text-lighten-3"
+										for="project_description"
+										>Description</label
+									>
 								</div>
 							</div>
 						</form>
@@ -66,9 +78,55 @@
 				<div class="modal-footer">
 					<a
 						href="#!"
-						id='submitProjectBtn'
-						class="modal-close white-text  waves-effect waves-purple purple lighten-3 btn-flat"
+						id="submitProjectBtn"
+						class="modal-close white-text waves-effect waves-purple purple lighten-3 btn-flat"
 						>Add</a
+					>
+				</div>
+			</div>
+
+			<!-- TASK MODAL Structure -->
+			<div id="taskModal" class="modal modal-fixed-footer">
+				<div class="modal-content">
+					<h4 class="purple-text text-lighten-3">Add a task</h4>
+					<div class="row">
+						<form class="col s12">
+							<div class="row">
+								<div class="input-field col s12">
+									<input
+										placeholder="Đi mua tàu hũ"
+										id="task_name"
+										type="text"
+										name='task_name'
+									/>
+									<label class='purple-text text-lighten-3' for="task_name">Task name</label>
+								</div>
+							</div>
+							<div class='row'>
+								<div class="input-field col s12">
+									<input id="task_description" type="text" 
+									name = 'task_description/>
+									<label class='purple-text text-lighten-3' for="task_description">Description</label>
+								</div>
+							</div>
+							<div class='row'>
+								<div class='input-field col s12'>
+									<input id='task_duedate' name='task_duedate' type="text" class="datepicker">
+									<label class='purple-text text-lighten-3' for = 'task_duedate'>Due Date</label>
+								</div>
+							</div>
+							<div class='row'>
+								<div class='input-field col s12'>
+									<input id='task_notes' name='task_notes' type="text">
+									<label class='purple-text text-lighten-3' for = 'task_nodes'>Notes</label>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="#!" id='submitBtn' class="modal-close waves-effect waves-green btn-flat"
+						>Add task</a
 					>
 				</div>
 			</div>

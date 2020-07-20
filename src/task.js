@@ -1,9 +1,7 @@
 import {
-	generateModal,
 	collapisbleHandler,
 	deleteButtonModalHandler,
 } from './utility.js';
-import { myTaskModalHTML, myDeleteModalHTML } from './innerHtml.js';
 import { toLocalStorage } from './utility.js';
 import { removeAssociatedTasks } from './project.js'
 import { flatten } from 'lodash';
@@ -11,17 +9,20 @@ import { flatten } from 'lodash';
 let taskList = [];
 export let renderedTaskList = [];
 
-export const addTasksHandler = (taskBtns) => {
-	taskBtns.forEach((button) => {
-		button.addEventListener('click', generateTaskModal);
-	});
+export const addTasksHandler = (taskBtn) => {
+	let parentId = taskBtn.parentElement.parentElement.parentElement.parentElement.parentElement;
+	if (!taskBtn.classList.contains('listening')) {
+		taskBtn.addEventListener('click', () => {
+			generateTask(parentId);
+			taskBtn.classList.add('listening');
+		});
+	}
 };
 
 const createTaskList = (
 	name,
 	description,
 	duedate,
-	priority,
 	notes,
 	parent
 ) => {
@@ -29,42 +30,40 @@ const createTaskList = (
 		name,
 		description,
 		duedate,
-		priority,
 		notes,
 		parent,
 		uniqueId: Math.random(),
 	});
-	renderTask(taskList);
+
+	renderTask(taskList)
 };
 
-const generateTaskModal = () => {
-	const taskModal = generateModal('taskModal', myTaskModalHTML);
-
-	let taskParentProject = event.target;
-	taskParentProject = taskParentProject.dataset.id;
+export const generateTask = (parent) => {
+	const taskModal = document.getElementById('taskModal');
+	let taskParentProject = parent;
 
 	const submitBtn = taskModal.querySelector('#submitBtn');
-	submitBtn.addEventListener('click', () => {
-		const taskName = taskModal.querySelector('#task-name').value;
-		const taskDescription = taskModal.querySelector('#task-description').value;
-		const taskDuedate = taskModal.querySelector('#task-duedate').value;
-		const taskPriority = taskModal.querySelector('#task-priority').value;
-		const taskNotes = taskModal.querySelector('#task-notes').value;
-
-		createTaskList(
-			taskName,
-			taskDescription,
-			taskDuedate,
-			taskPriority,
-			taskNotes,
-			taskParentProject
-		);
-	});
-
-	closeModal(taskModal);
+	if (!submitBtn.classList.contains('listening')) {
+		submitBtn.addEventListener('click', () => {
+			const taskName = taskModal.querySelector('#task_name').value;
+			const taskDescription = taskModal.querySelector('#task_description').value;
+			const taskDuedate = taskModal.querySelector('#task_duedate').value;
+			const taskNotes = taskModal.querySelector('#task_notes').value;
+				createTaskList(
+					taskName,
+					taskDescription,
+					taskDuedate,
+					taskNotes,
+					taskParentProject
+				);
+		});
+		submitBtn.classList.add('listening');
+	}
 };
 
 const renderTask = (array) => {
+	console.log(array);
+	console.log('hi');
 	if (array.constructor == Array) {
 		array.forEach((element) => {
 			let taskItem = document.createElement('li');
@@ -84,11 +83,10 @@ const renderTask = (array) => {
         </div>
        `;
 
-			let parent = element.parent;
-			console.log(parent);
-			let parentUl = document.getElementById(parent);
-			if (!parentUl) {
+			let parentDiv = element.parent;
+			if (!parentDiv) {
 				let index = array.indexOf(element);
+				console.log(indexx);
 				array.splice(index, 1);
 				let storedTasks = JSON.parse(localStorage.getItem('taskList'));
 				storedTasks.splice(index, 1);
@@ -96,13 +94,9 @@ const renderTask = (array) => {
 				return renderTask(array);
 			
 			}
-			parentUl.insertAdjacentElement('beforeend', taskItem);
-
+			parentDiv.insertAdjacentElement('beforeend', taskItem);
 			let renderedTask = array.splice(0, 1);
 			renderedTaskList.push(renderedTask);
-			collapisbleHandler();
-			let deleteButton = document.getElementsByClassName('deleteTaskBtn');
-			deleteButtonModalHandler(deleteButton, parent, element.uniqueId);
 		});
 		toLocalStorage('taskList', renderedTaskList);
 	}
@@ -136,9 +130,7 @@ const renderTask = (array) => {
 
 			let renderedTask = array.splice(0, 1);
 			renderedTaskList.push(renderedTask);
-			collapisbleHandler();
-			let deleteButton = document.getElementsByClassName('deleteTaskBtn');
-			deleteButtonModalHandler(deleteButton, parent, array.uniqueId);
+
 		};
 }
 

@@ -1,15 +1,5 @@
 import {createDeleteTaskModal} from './task.js'
 
-export const generateModal = (modalId, templateHTML) => {
-	const myModal = document.createElement('div');
-	myModal.id = modalId;
-	myModal.classList.add('modal');
-	myModal.innerHTML = templateHTML;
-
-	hook.append(myModal);
-	myModal.style.display = 'block';
-	return myModal;
-};
 
 export const toLocalStorage = (key, renderedObject) => {
 	if (key === 'projectList') {
@@ -19,31 +9,6 @@ export const toLocalStorage = (key, renderedObject) => {
 		localStorage.setItem(key, JSON.stringify(renderedObject));
 	}
 }
-
-
-export const collapisbleHandler = () => {
-	let collapsible = document.getElementsByClassName('collapsible');
-	let collapsibleTaskArray = Array.from(collapsible);
-
-	collapsibleTaskArray.forEach((element) => {
-		element.click();
-		element.click();
-		if (!element.classList.contains('listening')) {
-			element.addEventListener('click', function () {
-				element.classList.toggle('active');
-				element.classList.add('listening');
-
-				let content = element.nextElementSibling;
-
-				if (content.style.display === 'block') {
-					content.style.display = 'none';
-				} else {
-					content.style.display = 'block';
-				}
-			});
-		}
-	});
-};
 
 export const deleteButtonModalHandler = (button, parent, uniqueId) => {
 	let renderedDeleteButton = button[0];
