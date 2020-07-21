@@ -1,8 +1,6 @@
 import { generateProject, projectsFromLocaleStorage } from './project.js';
 import { generateTask } from './task.js';
 
-const hook = document.getElementById('hook');
-
 (() => {
 	if (localStorage.length > 0) {
 		projectsFromLocaleStorage();

@@ -62,3 +62,35 @@ td.is-today{
 .datepicker-table td.is-selected{
   color:white !important;
 }
+
+.dropdown-content li>a, .dropdown-content li>span {
+  color: #ce93d8 !important;
+}
+
+
+/* input fields */
+input {
+  color: grey;
+}
+input:not([type]), input[type=text]:not(.browser-default), input[type=password]:not(.browser-default), input[type=email]:not(.browser-default), input[type=url]:not(.browser-default), input[type=time]:not(.browser-default), input[type=date]:not(.browser-default), input[type=datetime]:not(.browser-default), input[type=datetime-local]:not(.browser-default), input[type=tel]:not(.browser-default), input[type=number]:not(.browser-default), input[type=search]:not(.browser-default), textarea.materialize-textarea {
+  color: grey;
+}
+/* dropdown */
+.collapsible{
+margin:0 auto !important;
+width: 50% !important;
+border-top: 1px solid #ce93d8 !important;
+border-left: 1px solid #ce93d8 !important;
+border-right: 1px solid #ce93d8 !important;
+
+
+}
+.collapsible-header{
+  border-bottom: 1px solid #ce93d8 !important;
+}
+
+/* row  */
+.row {
+  margin-bottom: 0 !important;
+  margin-top: 15px;
+}

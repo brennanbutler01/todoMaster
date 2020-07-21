@@ -35,7 +35,6 @@ const createTaskList = (name, description, duedate, notes) => {
 	};
 	taskList.push(newTask);
 	renderTask(taskList);
-	console.log(taskList);
 };
 
 
@@ -50,7 +49,6 @@ const taskSubmitHandler = () => {
 		taskDescription,
 		taskDuedate,
 		taskNotes,
-			// taskParentProject
 	);
 };
 const submitBtn = document.getElementById('submitBtn');
@@ -61,42 +59,38 @@ export const generateTaskParent = (parent) => {
 	parentDivArray.push(parentProject);
 };
 
-// const renderTask = (array) => {
-// 	console.log(array);
-// 	if (array.constructor == Object) {
-// 		renderedTaskList.push(array);
-// 		renderTask(array);
-// 	} else {
-// 		array.forEach((element) => {
-// 			let parent = document.getElementById(`${element.parent.id}`);
-// 			let dropdownDiv = document.createElement('div');
-// 			dropdownDiv.classList.add('right-align');
-// 			dropdownDiv.innerHTML = `
-// 			<a class='dropdown-trigger btn-large waves-effect waves-light purple lighten-3' href='#' id= 'dropdown${element.id}' data-target='dropdown${element.id}'>See tasks!</a>
-// 			`;
-// 			console.log(element);
-			// parent.firstElementChild.firstElementChild.firstElementChild.firstElementChild.
-			// 	lastElementChild.insertAdjacentElement(
-			// 	'afterend',
-			// 	dropdownDiv
-			// );
-			// 	let taskItem = document.createElement('ul');
-			// 	taskItem.id = `dropdown${element.parent.id}`;
-			// 	taskItem.classList.add('dropdown-content');
-			// 	taskItem.innerHTML = `
-			// 	<li><a href="#!">${element.name}</a></li>
-			//   </ul>
-			// `;
+const renderTask = (array) => {
+	if (array.constructor == Object) {
+		taskList.push(array);
+		renderTask(array);
+	}
+	else {
+		array.forEach((element) => {
+			let parent = document.getElementById(`${element.parent.id}`);
+			let parentId = parent.id;
+			console.log(parentId);
+			let a = document.createElement('ul');
+			a.classList.add('collapsible');
+			a.innerHTML = `
+			<li>
+			<div class="collapsible-header">${element.name}</div>
+			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+			</li>`;
+			parent.append(a);
 
-			// // setTimeout(() => {
-			// // 	let elems = document.getElementById(`dropdown${element.id}`);
-			// // 	var instances = M.Dropdown.init(elems);
-			// }, 300);
+			
+			var elems = document.querySelectorAll('.collapsible');
+			var instances = M.Collapsible.init(elems);
 
-			// // let parentDiv = element.parent;
+			let indexOfTask = array.indexOf(element);
+			array.splice(indexOfTask, 1);
+			
+			
+			
+			// let parentDiv = element.parent;
 			// if (!parentDiv) {
 			// 	let index = array.indexOf(element);
-			// 	console.log(indexx);
+			// 	console.log(index);
 			// 	array.splice(index, 1);
 			// 	let storedTasks = JSON.parse(localStorage.getItem('taskList'));
 			// 	storedTasks.splice(index, 1);
@@ -107,39 +101,13 @@ export const generateTaskParent = (parent) => {
 			// parentDiv.insertAdjacentElement('beforeend', taskItem);
 			// let renderedTask = array.splice(0, 1);
 			// renderedTaskList.push(renderedTask);
-// 		});
-// 		// toLocalStorage('taskList', renderedTaskList);
-// 	}
-// };
+		});
+		toLocalStorage('taskList', array);
+	}
+};
 
-let myModalIsVisible = false;
 
 export const createDeleteTaskModal = (parent, uniqueId) => {
-	let myModal = document.createElement('div');
-
-	let anyDeletesOpen = document.getElementById('deleteModal');
-	if (anyDeletesOpen) {
-		anyDeletesOpen.remove();
-	}
-	myModal.classList.add('modal');
-	myModal.style.display = 'block';
-	myModal.id = 'deleteModal';
-	myModal.innerHTML = myDeleteModalHTML;
-	if (myModalIsVisible === false) {
-		parent.insertAdjacentElement('afterbegin', myModal);
-	}
-
-	myModalIsVisible = true;
-
-	const deleteModalCancelBtn = document.getElementById('denyDeleteBtn');
-	deleteModalCancelBtn.addEventListener('click', () => {
-		myModal.remove();
-	});
-
-	const deleteModalConfirmationBtn = document.getElementById(
-		'deleteConfirmationBtn'
-	);
-
 	deleteModalConfirmationBtn.addEventListener('click', () => {
 		let items = JSON.parse(localStorage.getItem('taskList'));
 		items = _.flatten(items);
@@ -158,14 +126,6 @@ export const createDeleteTaskModal = (parent, uniqueId) => {
 			}
 		}
 	});
-
-	window.onclick = function (event) {
-		console.log(event);
-	};
-
-	closeModal(myModal);
-
-	myModalIsVisible = false;
 };
 
 export const tasksFromLocalStorage = () => {

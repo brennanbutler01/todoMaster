@@ -76,7 +76,7 @@ const renderProject = (object, id) => {
 			</div>
 		  </div>	
 		   `;
-			
+
 			let deleteProjectButton = projectItem.querySelector('a');
 			deleteProjectButton.addEventListener('click', (e) => {
 				deleteRenderedProject(projectItem.id);
