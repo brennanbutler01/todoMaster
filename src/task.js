@@ -34,6 +34,7 @@ const createTaskList = (name, description, duedate, notes) => {
 		uniqueId: Math.random(),
 	};
 	taskList.push(newTask);
+	console.log(taskList);
 	renderTask(taskList);
 };
 
@@ -56,7 +57,12 @@ submitBtn.addEventListener('click', taskSubmitHandler);
 
 export const generateTaskParent = (parent) => {
 	let parentProject = parent;
-	parentDivArray.push(parentProject);
+	let parentProjectId = parentProject.id;
+	let parentObject = {
+		parentProjectId,
+		parentProject
+	}
+	parentDivArray.push(parentObject);
 };
 
 const renderTask = (array) => {
@@ -66,44 +72,57 @@ const renderTask = (array) => {
 	}
 	else {
 		array.forEach((element) => {
-			let parent = document.getElementById(`${element.parent.id}`);
-			let parentId = parent.id;
-			console.log(parentId);
-			let a = document.createElement('ul');
-			a.classList.add('collapsible');
-			a.innerHTML = `
+			let id = element.parent.parentProjectId;
+			let parent = document.getElementById(`${id}`);			
+			let taskUl = document.createElement('ul');
+			taskUl.classList.add('collapsible');
+			taskUl.innerHTML = `
 			<li>
-			<div class="collapsible-header">${element.name}</div>
-			<div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+			<div class="collapsible-header">
+				<span class='eleName'>${element.name}</span>
+				<span class ='eleDate'>${element.duedate}</span>
+			</div>
+			<div class="collapsible-body">
+			<p>${element.description}</p>
+			<p> ${element.notes}
+			<span style='display:flex; justify-content:flex-end'>
+			<a class="waves-effect waves-red btn-small purple lighten-3" id='deleteBtn${element.uniqueId}'>
+			Delete Task</a>
+			</span>
+			</p>
+			</div>
 			</li>`;
-			parent.append(a);
+			if (!parent) {
+				return;
+			}
+			parent.append(taskUl);
 
 			
 			var elems = document.querySelectorAll('.collapsible');
 			var instances = M.Collapsible.init(elems);
 
 			let indexOfTask = array.indexOf(element);
-			array.splice(indexOfTask, 1);
+			let renderedTask = array.splice(indexOfTask, 1);
+			renderedTaskList.push(renderedTask)
 			
 			
-			
-			// let parentDiv = element.parent;
-			// if (!parentDiv) {
-			// 	let index = array.indexOf(element);
-			// 	console.log(index);
-			// 	array.splice(index, 1);
-			// 	let storedTasks = JSON.parse(localStorage.getItem('taskList'));
-			// 	storedTasks.splice(index, 1);
-			// 	localStorage.setItem('taskList', storedTasks)
-			// 	return renderTask(array);
+			let parentDiv = element.parent;
+			if (!parentDiv) {
+				let index = array.indexOf(element);
+				array.splice(index, 1);
+				let storedTasks = JSON.parse(localStorage.getItem('taskList'));
+				storedTasks.splice(index, 1);
+				localStorage.setItem('taskList', storedTasks)
+				return renderTask(array);
 
-			// }
-			// parentDiv.insertAdjacentElement('beforeend', taskItem);
-			// let renderedTask = array.splice(0, 1);
-			// renderedTaskList.push(renderedTask);
+			}
+		
+			let deleteBtn = document.getElementById(`deleteBtn${element.uniqueId}`);
+			console.log(deleteBtn);
 		});
-		toLocalStorage('taskList', array);
+		toLocalStorage('taskList', renderedTaskList);
 	}
+
 };
 
 
@@ -117,7 +136,6 @@ export const createDeleteTaskModal = (parent, uniqueId) => {
 				let indexOfTask = items.indexOf(toBeDeletedTask);
 				items.splice(indexOfTask, 1);
 				parent.remove();
-				myModal.remove();
 				renderedTaskList.splice(indexOfTask, 1);
 				toLocalStorage('taskList', renderedTaskList);
 				if (renderedTaskList.length === 0) {

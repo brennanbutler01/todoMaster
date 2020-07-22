@@ -106,6 +106,6 @@ export const projectsFromLocaleStorage = () => {
 		for (const item of items) {
 			renderProject(item);
 		}
-		// tasksFromLocalStorage();
+		tasksFromLocalStorage();
 	}
 };

@@ -87,6 +87,13 @@ border-right: 1px solid #ce93d8 !important;
 }
 .collapsible-header{
   border-bottom: 1px solid #ce93d8 !important;
+  justify-content: space-between;
+}
+.eleName {
+  padding-left: 15px;
+}
+.eleDate {
+  padding-right: 15px;
 }
 
 /* row  */
@@ -94,3 +101,4 @@ border-right: 1px solid #ce93d8 !important;
   margin-bottom: 0 !important;
   margin-top: 15px;
 }
+
