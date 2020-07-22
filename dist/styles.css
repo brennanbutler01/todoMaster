@@ -1,5 +1,5 @@
 body {
-    background-color: #FFFAFA;
+    background-color: #eab9dd;
     font-family: 'Montserrat', sans-serif;
 }
 /*----------- Add project modal ---------- */
@@ -94,6 +94,13 @@ border-right: 1px solid #ce93d8 !important;
 }
 .eleDate {
   padding-right: 15px;
+}
+.collapsible-body {
+  color:#fff !important;
+  border-bottom: 1.5px solid #ce93d8 !important;
+  font-size: 1em !important;
+  padding-top: 15px !important;
+  padding-bottom: 15px !important;  
 }
 
 /* row  */
