@@ -126,7 +126,6 @@ const renderTask = (array) => {
 
 				for (const task of storedTasks) {
 					if (task.uniqueId === id) {
-						let taskToBeDeleted = task;
 						let indexOfTask = storedTasks.indexOf(task);
 						renderedTaskList.splice(indexOfTask, 1);
 						toLocalStorage('taskList', renderedTaskList);
