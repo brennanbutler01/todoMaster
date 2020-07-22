@@ -34,7 +34,6 @@ const createTaskList = (name, description, duedate, notes) => {
 		uniqueId: Math.random(),
 	};
 	taskList.push(newTask);
-	console.log(taskList);
 	renderTask(taskList);
 };
 
@@ -75,6 +74,7 @@ const renderTask = (array) => {
 			let id = element.parent.parentProjectId;
 			let parent = document.getElementById(`${id}`);			
 			let taskUl = document.createElement('ul');
+			taskUl.id = element.uniqueId;
 			taskUl.classList.add('collapsible');
 			taskUl.innerHTML = `
 			<li>
@@ -118,32 +118,26 @@ const renderTask = (array) => {
 			}
 		
 			let deleteBtn = document.getElementById(`deleteBtn${element.uniqueId}`);
-			console.log(deleteBtn);
+			deleteBtn.addEventListener('click', () => {
+				let id = element.uniqueId;
+				let taskUl = deleteBtn.closest('ul');
+				let storedTasks = JSON.parse(localStorage.getItem('taskList'));
+				storedTasks = _.flatten(storedTasks);
+
+				for (const task of storedTasks) {
+					if (task.uniqueId === id) {
+						let taskToBeDeleted = task;
+						let indexOfTask = storedTasks.indexOf(task);
+						renderedTaskList.splice(indexOfTask, 1);
+						toLocalStorage('taskList', renderedTaskList);
+					}
+				}
+				taskUl.remove();
+			})
 		});
 		toLocalStorage('taskList', renderedTaskList);
 	}
 
-};
-
-
-export const createDeleteTaskModal = (parent, uniqueId) => {
-	deleteModalConfirmationBtn.addEventListener('click', () => {
-		let items = JSON.parse(localStorage.getItem('taskList'));
-		items = _.flatten(items);
-		for (const task of items) {
-			if (task.uniqueId === uniqueId) {
-				let toBeDeletedTask = task;
-				let indexOfTask = items.indexOf(toBeDeletedTask);
-				items.splice(indexOfTask, 1);
-				parent.remove();
-				renderedTaskList.splice(indexOfTask, 1);
-				toLocalStorage('taskList', renderedTaskList);
-				if (renderedTaskList.length === 0) {
-					localStorage.removeItem('taskList');
-				}
-			}
-		}
-	});
 };
 
 export const tasksFromLocalStorage = () => {

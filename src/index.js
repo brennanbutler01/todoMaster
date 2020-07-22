@@ -1,5 +1,4 @@
 import { generateProject, projectsFromLocaleStorage } from './project.js';
-import { generateTask } from './task.js';
 
 (() => {
 	if (localStorage.length > 0) {
